@@ -1,0 +1,84 @@
+erDiagram
+    SOCIAL_MEDIA ||--o{ USER : has
+    USER ||--o{ POST : creates
+    USER ||--o{ REPOST : reposts
+    POST ||--o{ REPOST : is_reposted_as
+    PROJECT ||--o{ PROJECT_FIELD : defines
+    PROJECT ||--o{ PROJECT_POST : analyzes
+    POST ||--o{ PROJECT_POST : is_analyzed_by
+    PROJECT_POST ||--o{ ANALYSIS_RESULT : has
+    PROJECT_FIELD ||--o{ ANALYSIS_RESULT : provides_schema_for
+    INSTITUTE ||--o{ PROJECT : sponsors
+    
+    SOCIAL_MEDIA {
+        int media_id PK
+        varchar name UK
+    }
+    
+    USER {
+        int user_id PK
+        int media_id FK
+        varchar username
+        varchar first_name
+        varchar last_name
+        varchar country_of_birth
+        varchar country_of_residence
+        int age
+        varchar gender
+        boolean is_verified
+    }
+    
+    POST {
+        int post_id PK
+        int user_id FK
+        int media_id FK
+        text content
+        datetime posted_time
+        varchar location_city
+        varchar location_state
+        varchar location_country
+        int likes
+        int dislikes
+        boolean has_multimedia
+    }
+    
+    REPOST {
+        int repost_id PK
+        int post_id FK
+        int user_id FK
+        datetime repost_time
+    }
+    
+    INSTITUTE {
+        int institute_id PK
+        varchar name UK
+    }
+    
+    PROJECT {
+        int project_id PK
+        varchar name UK
+        varchar manager_first_name
+        varchar manager_last_name
+        int institute_id FK
+        date start_date
+        date end_date
+    }
+    
+    PROJECT_FIELD {
+        int field_id PK
+        int project_id FK
+        varchar field_name
+    }
+    
+    PROJECT_POST {
+        int project_post_id PK
+        int project_id FK
+        int post_id FK
+    }
+    
+    ANALYSIS_RESULT {
+        int result_id PK
+        int project_post_id FK
+        int field_id FK
+        varchar value
+    }

@@ -1,0 +1,60 @@
+erDiagram
+    SOCIAL_MEDIA {
+        string media_name PK
+    }
+
+    USER {
+        string username PK
+        string media_name FK
+        string first_name
+        string last_name
+        string country_of_birth
+        string country_of_residence
+        int age
+        string gender
+        boolean is_verified
+    }
+
+    POST {
+        int post_id PK
+        string media_name FK
+        string username FK
+        string text
+        datetime post_time
+        string location_city
+        string location_state
+        string location_country
+        int likes
+        int dislikes
+        boolean has_multimedia
+        int repost_id
+        datetime repost_time
+    }
+
+    PROJECT {
+        string project_name PK
+        string project_manager_last_name
+        string project_manager_first_name
+        string institute_name
+        date start_date
+        date end_date
+    }
+
+    PROJECT_FIELD {
+        string project_name FK
+        string field_name PK
+        string field_description
+    }
+
+    PROJECT_ANALYSIS {
+        string project_name FK
+        int post_id FK
+        string field_name FK
+        string field_value
+    }
+
+    SOCIAL_MEDIA ||--|| USER : has
+    USER ||--|| POST : creates
+    PROJECT ||--o{ PROJECT_FIELD : defines
+    PROJECT ||--o{ PROJECT_ANALYSIS : analyzes
+    POST ||--o{ PROJECT_ANALYSIS : has_analysis
